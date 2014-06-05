@@ -25,13 +25,32 @@ class Chef
         :default => false,
         :description => "Whether to skip checking the Chef Server version.  This will also skip any auto-configured options"
 
+      option :org,
+        :long => '--only-org ORGNAME',
+        :description => "Only back up objects in the named organization (default: all orgs)"
+
       option :with_user_sql,
         :long => '--with-user-sql',
         :description => 'Whether to try direct data base access for user export.  Required to properly handle passwords, keys, and USAGs'
 
-      option :org,
-        :long => '--only-org ORGNAME',
-        :description => "Only back up objects in the named organization (default: all orgs)"
+      option :sql_host,
+        :long => '--sql-host HOSTNAME',
+        :description => 'Postgresql database hostname (default: localhost); for use with --with-user-sql',
+        :default => "localhost"
+
+      option :sql_port,
+        :long => '--sql-port PORT',
+        :description => 'Postgresql database port (default: 5432); for use with --with-user-sql',
+        :default => 5432
+
+      option :sql_user,
+        :long => "--sql-user USERNAME",
+        :description => 'User used to connect to the postgresql database (default: opscode_chef); for use with --with-user-sql',
+        :default => "opscode_chef"
+
+      option :sql_password,
+        :long => "--sql-password PASSWORD",
+        :description => 'Password used to connect to the postgresql database; for use with --with-user-sql'
 
       deps do
         require 'chef/chef_fs/config'
@@ -149,8 +168,7 @@ class Chef
           Chef::Knife::EcKeyExport.deps
           k = Chef::Knife::EcKeyExport.new
           k.name_args = ["#{dest_dir}/key_dump.json"]
-          k.config[:sql_host] = "localhost"
-          k.config[:sql_port] = 5432
+          k.config = config.select{|k,v| k.to_s.match(/^sql/)}
           k.run
         end
 

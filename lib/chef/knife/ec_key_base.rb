@@ -30,23 +30,6 @@ class Chef
             require 'json'
           end
 
-          option :sql_host,
-          :long => '--sql-host HOSTNAME',
-          :description => 'Postgresql database hostname (default: localhost)',
-          :default => "localhost"
-
-          option :sql_port,
-          :long => '--sql-port PORT',
-          :description => 'Postgresql database port (default: 5432)',
-          :default => 5432
-
-          option :sql_user,
-          :long => "--sql-user USERNAME",
-          :description => 'User used to connect to the postgresql database.'
-
-          option :sql_password,
-          :long => "--sql-password PASSWORD",
-          :description => 'Password used to connect to the postgresql database'
         end
       end
 

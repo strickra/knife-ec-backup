@@ -25,20 +25,6 @@ class Chef
 
       include Knife::EcKeyBase
 
-      banner "knife ec key import [PATH]"
-
-      option :skip_pivotal,
-        :long => "--[no-]skip-pivotal",
-        :default => true,
-        :boolean => true,
-        :description => "Upload pivotal key.  By default the pivotal key is not uploaded."
-
-      option :skip_ids,
-        :long => "--[no-]skip-user-ids",
-        :default => true,
-        :boolean => true,
-        :description => "Upload user ids."
-
       def run
         if config[:sql_user].nil? || config[:sql_password].nil?
           load_config_from_file!

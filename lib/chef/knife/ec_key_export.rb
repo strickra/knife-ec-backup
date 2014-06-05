@@ -25,8 +25,6 @@ class Chef
 
       include Knife::EcKeyBase
 
-      banner "knife ec key export [PATH]"
-
       def run
         if config[:sql_user].nil? || config[:sql_password].nil?
           load_config_from_file!
